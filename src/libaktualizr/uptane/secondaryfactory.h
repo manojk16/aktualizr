@@ -1,14 +1,15 @@
 #ifndef UPTANE_SECONDARYFACTORY_H_
 #define UPTANE_SECONDARYFACTORY_H_
 
+#include "ipuptanesecondary.h"
+#include "isotpsecondary.h"
+#include "legacysecondary.h"
 #include "logging/logging.h"
-#include "uptane/ipuptanesecondary.h"
-#include "uptane/legacysecondary.h"
-#include "uptane/opcuasecondary.h"
-#include "uptane/secondaryconfig.h"
-#include "uptane/secondaryinterface.h"
-#include "uptane/virtualsecondary.h"
+#include "opcuasecondary.h"
+#include "secondaryconfig.h"
+#include "secondaryinterface.h"
 #include "utilities/events.h"
+#include "virtualsecondary.h"
 
 namespace Uptane {
 
@@ -24,6 +25,8 @@ class SecondaryFactory {
         break;
       case SecondaryType::kIpUptane:
         return std::make_shared<IpUptaneSecondary>(sconfig);
+      case SecondaryType::kIsoTpUptane:
+        return std::make_shared<IsoTpSecondary>(sconfig);
       case SecondaryType::kOpcuaUptane:
 #ifdef OPCUA_SECONDARY_ENABLED
         return std::make_shared<OpcuaSecondary>(sconfig);
