@@ -135,6 +135,7 @@ void process_events_FullWithUpdates(const std::shared_ptr<event::BaseEvent>& eve
       EXPECT_EQ(event->variant, "InstallComplete");
       const auto install_complete = dynamic_cast<event::InstallComplete*>(event.get());
       EXPECT_EQ(install_complete->serial.ToString(), "CA:FE:A6:D2:84:9D");
+      EXPECT_TRUE(install_complete->success);
       break;
     }
     case 5: {
@@ -143,13 +144,13 @@ void process_events_FullWithUpdates(const std::shared_ptr<event::BaseEvent>& eve
       EXPECT_EQ(install_started->serial.ToString(), "secondary_ecu_serial");
       break;
     }
-    case 6:
+    case 6: {
       EXPECT_EQ(event->variant, "InstallComplete");
-      {
-        const auto install_complete = dynamic_cast<event::InstallComplete*>(event.get());
-        EXPECT_EQ(install_complete->serial.ToString(), "secondary_ecu_serial");
-      }
+      const auto install_complete = dynamic_cast<event::InstallComplete*>(event.get());
+      EXPECT_EQ(install_complete->serial.ToString(), "secondary_ecu_serial");
+      EXPECT_TRUE(install_complete->success);
       break;
+    }
     case 7:
       EXPECT_EQ(event->variant, "AllInstallsComplete");
       break;
@@ -439,6 +440,7 @@ void process_events_InstallWithUpdates(const std::shared_ptr<event::BaseEvent>& 
       EXPECT_EQ(event->variant, "InstallComplete");
       const auto install_complete = dynamic_cast<event::InstallComplete*>(event.get());
       EXPECT_EQ(install_complete->serial.ToString(), "CA:FE:A6:D2:84:9D");
+      EXPECT_TRUE(install_complete->success);
       break;
     }
     case 8: {
@@ -451,6 +453,7 @@ void process_events_InstallWithUpdates(const std::shared_ptr<event::BaseEvent>& 
       EXPECT_EQ(event->variant, "InstallComplete");
       const auto install_complete = dynamic_cast<event::InstallComplete*>(event.get());
       EXPECT_EQ(install_complete->serial.ToString(), "secondary_ecu_serial");
+      EXPECT_TRUE(install_complete->success);
       break;
     }
     case 10: {
